@@ -29,15 +29,16 @@ class MainActivity : AppCompatActivity(), UserAdapter.Callback {
 	@Inject lateinit var service: RandomUserApiService
 	@Inject lateinit var userAdapter: UserAdapter
 	
+	// Commented code is based on another approach i.e. without @Inject annotation.
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 		// val randomUserComponent = DaggerRandomUserComponent.create()
 		DaggerMainActivityComponent.builder().mainActivityModule(MainActivityModule(this)).randomUserComponent(App.randomUserAppComponent).build()
 				.injectMainActivity(this)
-		//		service = mainActivityComponent.getRandomUserApiService()
+		// service = mainActivityComponent.getRandomUserApiService()
 		mainRecycler.layoutManager = LinearLayoutManager(this)
-		//		userAdapter = mainActivityComponent.getUserAdapter()
+		// userAdapter = mainActivityComponent.getUserAdapter()
 		skeletonView = Skeleton.bind(mainRecycler).adapter(userAdapter).load(R.layout.item_skeleton_user_list).duration(1300).show()
 		call()
 	}
